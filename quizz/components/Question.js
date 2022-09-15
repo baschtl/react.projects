@@ -1,7 +1,14 @@
 import React from "react"
+import { GameState } from "./enums"
+
+import {GameStateContext} from "./GameStateContext"
 
 export default function Question(props) {
-  function answerSelectable(answerId) {
+  function answerSelectable(answerId, gameState) {
+    if (gameState === GameState.RESULT) {
+      return false
+    }
+
     const currentSelected = props.answers.find(e => e.selected)
 
     // No answer selected
@@ -18,16 +25,34 @@ export default function Question(props) {
     return false
   }
 
-  let answerElements = props.answers.map(e => {
+  const gameState = React.useContext(GameStateContext)
+
+  let answerElements = props.answers.map(a => {
+    let additionalClassName = ""
+
+    if (gameState === GameState.RUNNING) {
+      if (a.selected) {
+        additionalClassName = "selected"
+      }
+    } else if (gameState === GameState.RESULT) {
+      if (a.correct) {
+        additionalClassName = "correct-result"
+      } else if (!a.correct && a.selected) {
+        additionalClassName = "incorrect-result"
+      } else {
+        additionalClassName = "not-selected-result"
+      }
+    }
+
     return <div
-      key={e.id}
-      className={`answer${ e.selected ? " selected" : ""}`}
+      key={a.id}
+      className={`answer ${additionalClassName}`}
       onClick={() => {
-        answerSelectable(e.id) && props.onAnswerClick(props.id, e.id)
+        answerSelectable(a.id, gameState) && props.onAnswerClick(props.id, a.id)
       }
     }
     >
-      {atob(e.value)}
+      {atob(a.value)}
     </div>
   })
 

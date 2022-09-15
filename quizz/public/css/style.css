@@ -23,7 +23,6 @@ button {
     cursor: pointer;
 }
 
-
 /* Start screen */
 
 .screen-start {
@@ -95,4 +94,23 @@ button {
     border: none;
     margin: 0.8px;
     background-color: #D6DBF5;
+}
+
+.correct-result {
+    border: none;
+    margin: 0.8px;
+    background-color: #94D7A2;
+    cursor: default;
+}
+
+.incorrect-result {
+    border: none;
+    margin: 0.8px;
+    background-color: #F8BCBC;
+    cursor: default;
+}
+
+.not-selected-result {
+    opacity: 0.5;
+    cursor: default;
 }
