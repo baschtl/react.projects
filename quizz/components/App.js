@@ -19,8 +19,8 @@ export default function App() {
         .catch(error => {
           console.error("Error fetching opentdb: ", error)
         });
-    }
-  }, [gameState])
+      }
+    }, [gameState])
 
   function generateQuestionData(data) {
     return data.map(e => {
@@ -54,10 +54,6 @@ export default function App() {
   }
 
   // Event handlers
-  function handleQuizStateChange(newState) {
-    setGameState(newState)
-  }
-
   function onAnswerClick(questionId, answerId) {
     setQuestionData(prevQuestionData => {
       return prevQuestionData.map(q => {
@@ -78,21 +74,23 @@ export default function App() {
     })
   }
 
+  function onStartQuizClick() {
+    setGameState(GameState.RUNNING)
+  }
+
   function onCheckAnswerClick() {
-    console.log("Check answers clicked")
-    handleQuizStateChange(GameState.RESULT)
+    setGameState(GameState.RESULT)
   }
 
   function onPlayAgainClick() {
-    console.log("Play again clicked")
-    handleQuizStateChange(GameState.RUNNING)
+    setGameState(GameState.RUNNING)
   }
 
   return (
-    <div>
+    <div className="screen-container">
       <GameStateContext.Provider value={gameState}>
       {gameState === GameState.START &&
-        <StartQuiz handleStartQuiz={() => handleQuizStateChange(GameState.RUNNING)}/>
+        <StartQuiz handleStartQuiz={onStartQuizClick}/>
       }
       {[GameState.RUNNING, GameState.RESULT].includes(gameState) &&
         <RunningQuiz
