@@ -19,8 +19,14 @@ button {
     border-radius: 15px;
 
     padding: 15px 50px;
+    margin-top: 20px;
+    align-self: center;
 
     cursor: pointer;
+}
+
+.screen-container {
+    background: #F5F7FB;
 }
 
 /* Start screen */
@@ -30,9 +36,8 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    max-width: 900px;
     height: 100%;
-    background: #F5F7FB;
 }
 
 .screen-start h1 {
@@ -40,6 +45,8 @@ button {
     font-weight: 700;
     font-size: 32px;
     line-height: 10px;
+
+    padding: 0px 75px;
 }
 
 .screen-start p {
@@ -55,15 +62,16 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    width: 100%;
+    align-items: flex-start;
+    padding-left: 75px;
+    max-width: 900px;
     height: 100%;
-    background: #F5F7FB;
 }
 
 .question-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto;
+    width: 100%;
     border-bottom: 0.8px solid #DBDEF0;
     padding-bottom: 15px;
 }
@@ -76,8 +84,7 @@ button {
 
 .answers-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    align-items: flex-start;
     gap: 20px;
 }
 
@@ -108,9 +115,21 @@ button {
     margin: 0.8px;
     background-color: #F8BCBC;
     cursor: default;
+    opacity: 0.5;
 }
 
 .not-selected-result {
     opacity: 0.5;
     cursor: default;
+}
+
+.result-container {
+    align-self: center;
+}
+
+.result-container--text {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    margin-right: 30px;
 }
