@@ -6,6 +6,19 @@ import {GameStateContext} from "./GameStateContext"
 import Question from "./Question"
 
 export default function RunningQuiz(props) {
+  function getResultText(questions) {
+    let correctAnswers = 0
+    questions.forEach(q => {
+      q.answers.forEach(a => {
+        if (a.selected && a.correct) {
+          correctAnswers++
+        }
+      });
+    })
+
+    return `You scored ${correctAnswers}/${questions.length} correct answers`
+  }
+
   let questionElements = props.data.map(e => {
     return <Question
       key={e.id}
@@ -19,17 +32,6 @@ export default function RunningQuiz(props) {
 
   const gameState = React.useContext(GameStateContext)
 
-  // TODO: Extract into function to avoid running in wrong state.
-  const maxCorrectAnswers = props.data.length
-  let correctAnswers = 0
-  props.data.forEach(q => {
-    q.answers.forEach(a => {
-      if (a.selected && a.correct) {
-        correctAnswers++
-      }
-    });
-  })
-
   return (
     <div className="screen-running">
       {questionElements}
@@ -37,8 +39,8 @@ export default function RunningQuiz(props) {
         <button onClick={props.onCheckAnswerClick}>Check answers</button>
       }
       {gameState === GameState.RESULT &&
-        <div>
-          You scored {correctAnswers}/{maxCorrectAnswers} correct answers
+        <div className="result-container">
+          <span className="result-container--text">{getResultText(props.data)}</span>
           <button onClick={props.onPlayAgainClick}>Play again</button>
         </div>
       }
